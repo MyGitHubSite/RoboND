@@ -1,1 +1,82 @@
+## Project: Search and Sample Return
+
+**The goals / steps of this project are the following:**  
+
+**Training / Calibration**  
+
+* Download the simulator and take data in "Training Mode"
+* Test out the functions in the Jupyter Notebook provided
+* Add functions to detect obstacles and samples of interest (golden rocks)
+* Fill in the `process_image()` function with the appropriate image processing steps (perspective transform, color threshold etc.) to get from raw images to a map.  The `output_image` you create in this step should demonstrate that your mapping pipeline works.
+* Use `moviepy` to process the images in your saved dataset with the `process_image()` function.  Include the video you produce as part of your submission.
+
+**Autonomous Navigation / Mapping**
+
+* Fill in the `perception_step()` function within the `perception.py` script with the appropriate image processing functions to create a map and update `Rover()` data (similar to what you did with `process_image()` in the notebook). 
+* Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
+* Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
+---
+[//]: # (Image References)
+
+[image1]: ./misc/rover_image.jpg
+[image2]: ./calibration_images/example_grid1.jpg
+[image3]: ./calibration_images/example_rock1.jpg 
+
+## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
+---
+### Writeup / README
+
+### Notebook Analysis
+#### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
+
+Describe in your writeup (and identify where in your code) how you modified or added functions to add obstacle and rock sample identification. 
+
+Here is an example of how to include an image in your writeup.
+
+![alt text][image1]
+
+#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
+
+Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
+
+![alt text][image2]
+### Autonomous Navigation and Mapping
+
+#### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+
+perception_step() and decision_step() functions have been filled in and their functionality explained in the writeup. 
+
+
+
+
+#### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
+
+My rover usually gets to > 75% mapped and > 75% fidelity quite easily though some problem areas pop up depending upon how the simulator was initialized. 
+
+ - Sometimes in certains parts of the map where it's a coin toss between going left or right my rover may need a few passes to eventually make the correct turn and continue on mapping unexplored regions.  I didn't want to over specify the decisions knowing what the map looks like so I avoided writing any kind of handling for the trouble spots.  If I had more time I would dive deeper into how the pixels, pitch, and roll are controlling the randomness and then fix so that the rover can traverse the map more quickly.  Right now the rover does a decent job with what I already implemented.
+ 
+ - The dark boulders are not getting picked up well enough in perception for the rover to avoid at times.  However, my stop and stuck routines and velocity control help the rover wiggle out of trouble eventually.  The boulders are 3D and the rover right now just isn't capable of avoiding getting jammed into them at times.
+ 
+ - My velocity and steering parameters as well as error handling parameters were determined by trial and error.  It would be fun to try and let the rover learn the best parameters through some deep learning.
+ 
+ - My rock collecting routine is working very well.  It was not difficult to implement.  THe only trouble that popped up is sometimes the rover would get jammed into the sides of the mountain and get stuck for a while.  The stop and stuck routines fixed that problem.  If the rover can get to the whole map the rover will pick up all the rocks.
+ 
+ - I did not have time to try and write a routine to return the rover back to the center of the map once all the rocks were collected.  I'm assuming this would be some sort of A* routine.  I would like to come back to this once I have more skills with building something like that.
+
+
+
+
+By running drive_rover.py and launching the simulator in autonomous mode, your rover does a reasonably good job at mapping the environment. 
+
+The rover must map at least 40% of the environment with 60% fidelity (accuracy) against the ground truth. You must also find (map) the location of at least one rock sample. They don't need to pick any rocks up, just have them appear in the map (should happen automatically if their map pixels in Rover.worldmap[:,:,1] overlap with sample locations.)
+
+**Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
+
+Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+
+
+
+
+
+
 
