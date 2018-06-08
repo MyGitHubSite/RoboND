@@ -1,6 +1,5 @@
 ## Project: Search and Sample Return
 
-
 **The goals / steps of this project are the following:**  
 
 **Training / Calibration**  
@@ -23,7 +22,7 @@
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 
-I modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection. However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+I modified the color_thresh function (color_thresh2) to take in a range of rbg values in order to have more control over detection. However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
 
   navigable terrain: [[160,255],[160,255],[160,255]])
   obstacles: [[0,160],[0,160],[0,160]])
