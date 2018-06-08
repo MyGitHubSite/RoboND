@@ -56,10 +56,11 @@ If any rock was found it was mapped onto the worldmap using the steps above.
 
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
 
-"Dark Boulder"
+Dark Boulder
+
 ![Boulder](calibration_images/Boulders.jpg) 
 
-![My Movie](mytest_mapping.mp4)
+![My Training Movie](mytest_mapping.mp4)
 
 ### Autonomous Navigation and Mapping
 
