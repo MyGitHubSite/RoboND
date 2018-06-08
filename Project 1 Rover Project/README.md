@@ -16,14 +16,7 @@
 * Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
 * Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 ---
-[//]: # (Image References)
 
-[image1]: ./misc/rover_image.jpg
-[image2]: ./calibration_images/example_grid1.jpg
-[image3]: ./calibration_images/example_rock1.jpg 
-
-## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
----
 ### Writeup / README
 
 ### Notebook Analysis
@@ -44,27 +37,86 @@ Describe in your writeup how you modified the process_image() to demonstrate you
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
 
-perception_step() and decision_step() functions have been filled in and their functionality explained in the writeup. 
+#### Perception
 
+Modified or added:
 
+Modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  - 
+However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+ - navigable terrain [[160,255],[160,255],[160,255]])
+ - rocks [[100,255],[100,255],[0,50]])
 
+Added the mask as discussed in the video to the obstacles.
 
+Added the rock routine as discussed in the video.  Also, added a Rover.seesrock property for use in the decision step.
+
+Added a pitch and roll routine to control when the map would be updated in order to greatly improve the fidelity.
+ 
+The source and destination points were added to create a perspective from the camera image.
+
+The forward perspective was then warped to a top-down view.
+
+The color thresholds were run through the color_thresh2 function to identify navigable terrain and obstacles.
+
+A rover vision was created so that the warped navigable terrain showed up as blue channel in an image and obstacles showed up in red in 
+the image.  The warped and rover vision image are overlayed onto the simulator in order to visualize what the camera sees.
+rover coordinates were calculated from the warped image.
+
+The rover coordinates were combined with the rover positions translate the rover vision image onto the world map.
+
+The navigable terrain from the rover image were overlayed onto the world map in bliue and the obstacle were overlayed onto the worldmap in red.  Pitch and roll thresholds were used to control when to mpa navigable terrain and obstacles in order to increase the accuracy of the mapping.
+
+Navigable pixel angles and their distances were calcuated for use in the decision steps.
+
+A rock finding routine was added to find gold rocks in the rover camera image.
+
+If any rock was found it was mapped onto the worldmap using the steps above.
+
+The angles and distances to the rocks was calculated for use in the rock collecting routine.
+
+Finally the Rover.seesrock property was set to true if a rock was found in the image.
+
+#### Decision
+ 
+This is where I spent the most time trying to improve the mapping%, fideilty%, and rock collection.  I wound up rewriting most of the code although many of the principles from the sample project were kept.
+ 
+Notable additions/modifications:
+ 
+Instead of using all navigable angles for calculating the steering angle while moving forward I used only angles beyond a certain distance (15).  This had the effect of focusing on longer angles for steering rather than short angles which the rover wouldn't be of much use to the rover while the rover is moving.  This allowed the rover to navigate the entire map in most cases with the added help of the stop and stuck routine to get out of jams from the dark boulders and while collecting rocks.
+
+I changed the stop_forward and go_forward thresholds to longer distances to avoid getting too close to walls in dead ends and also to have a more clean pathway after a turn to avoid the walls.
+
+I also changed the max velocity to 1.8 instead of 2.  Because I only used longer angles there was no need to go too fast.  I added a throttle calculator based on the ratio for narrow navigable angles to all longer navigable angles.  he higher the ratio the faster I allowed the rover to go.  The principle here was that when the pathway was more certain I cranked up the throttle.  When the pathway became more uncertain I slowed down.
+
+I added a rock collecting routine.  When the rover sees the rock it uses the angles to the rock to steer instead of the navigable angles.  Also, I slowed way down as soon as it sees the rock and starts sterring towards it.  I modified the stop forward threshold for collecting a rock to 1 so that the rover stopped right in fron of the rock for collection.
+
+I modified the stop routine so that when the rover comes to a halt it will search for a larger number of long angles to get a better restart out trouble.  Also, I added a calculation to be able to turn in a direction that helps move the rover toward unnavigated terrain when jammed up against a wall.
+
+Within the forward, stop, and rock collection routines I added some code to allow for a stuck condition.  The stuck mode will cause the rover to move backwards and turn at an angle that will help create enough navigable angles to move forward successfully.
+
+ - Forward: sees enough navigable angles but is jammed up and not moving forward.
+ - Stop: turning not enough to get out of a jam.
+ - Rock collecting: sees a rock but has an obstacle in the pathway.
+ 
+ In drive_rover.py I added 4 new rover properties for use in the decision step
+  - self.stuck_count   # keeps track of time spent in a stuck mode
+  - self.stuck_time    # time to perform action while in stuck mode
+  - self.seesrock      # does the rover see a rock?
+  - self.throttle_collect = 0.04 # Throttle setting for slow 
+  
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
 
 My rover usually gets to > 75% mapped and > 75% fidelity quite easily though some problem areas pop up depending upon how the simulator was initialized. 
 
- - Sometimes in certains parts of the map where it's a coin toss between going left or right my rover may need a few passes to eventually make the correct turn and continue on mapping unexplored regions.  I didn't want to over specify the decisions knowing what the map looks like so I avoided writing any kind of handling for the trouble spots.  If I had more time I would dive deeper into how the pixels, pitch, and roll are controlling the randomness and then fix so that the rover can traverse the map more quickly.  Right now the rover does a decent job with what I already implemented.
+ Sometimes in certains parts of the map where it's a coin toss between going left or right my rover may need a few passes to eventually make the correct turn and continue on mapping unexplored regions.  I didn't want to over specify the decisions knowing what the map looks like so I avoided writing any kind of handling for the trouble spots.  If I had more time I would dive deeper into how the pixels, pitch, and roll are controlling the randomness and then fix so that the rover can traverse the map more quickly.  Right now the rover does a decent job with what I already implemented.
  
- - The dark boulders are not getting picked up well enough in perception for the rover to avoid at times.  However, my stop and stuck routines and velocity control help the rover wiggle out of trouble eventually.  The boulders are 3D and the rover right now just isn't capable of avoiding getting jammed into them at times.
+ The dark boulders are not getting picked up well enough in perception for the rover to avoid at times.  However, my stop and stuck routines and velocity control help the rover wiggle out of trouble eventually.  The boulders are 3D and the rover right now just isn't capable of avoiding getting jammed into them at times.
  
- - My velocity and steering parameters as well as error handling parameters were determined by trial and error.  It would be fun to try and let the rover learn the best parameters through some deep learning.
+ My velocity and steering parameters as well as error handling parameters were determined by trial and error.  It would be fun to try and let the rover learn the best parameters through some deep learning.
  
- - My rock collecting routine is working very well.  It was not difficult to implement.  THe only trouble that popped up is sometimes the rover would get jammed into the sides of the mountain and get stuck for a while.  The stop and stuck routines fixed that problem.  If the rover can get to the whole map the rover will pick up all the rocks.
+ My rock collecting routine is working very well.  It was not difficult to implement.  The only trouble that popped up is sometimes the rover would get jammed into the sides of the mountain and get stuck for a while.  The stop and stuck routines fixed that problem.  If the rover can get to the whole map the rover will pick up all the rocks.
  
- - I did not have time to try and write a routine to return the rover back to the center of the map once all the rocks were collected.  I'm assuming this would be some sort of A* routine.  I would like to come back to this once I have more skills with building something like that.
-
-
-
+I did not have time to try and write a routine to return the rover back to the center of the map once all the rocks were collected.  I'm assuming this would be some sort of A* routine.  I would like to come back to this once I have more skills with building something like that.
 
 By running drive_rover.py and launching the simulator in autonomous mode, your rover does a reasonably good job at mapping the environment. 
 
