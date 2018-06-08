@@ -39,36 +39,30 @@ Describe in your writeup how you modified the process_image() to demonstrate you
 
 #### Perception
 
-Modified or added:
+(1) The source and destination points were added to create a perspective from the camera image.
 
-Modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  - 
-However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+(2) The forward perspective was then warped to a top-down view.
+
+(3) The color thresholds were run through the color_thresh2 function to identify navigable terrain and obstacles.
+
+Modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
  - navigable terrain [[160,255],[160,255],[160,255]])
  - rocks [[100,255],[100,255],[0,50]])
 
-Added the mask as discussed in the video to the obstacles.
-
-Added the rock routine as discussed in the video.  Also, added a Rover.seesrock property for use in the decision step.
-
-Added a pitch and roll routine to control when the map would be updated in order to greatly improve the fidelity.
- 
-The source and destination points were added to create a perspective from the camera image.
-
-The forward perspective was then warped to a top-down view.
-
-The color thresholds were run through the color_thresh2 function to identify navigable terrain and obstacles.
-
-A rover vision was created so that the warped navigable terrain showed up as blue channel in an image and obstacles showed up in red in 
-the image.  The warped and rover vision image are overlayed onto the simulator in order to visualize what the camera sees.
+(4) A rover vision was created so that the warped navigable terrain showed up as blue channel in an image and obstacles showed up in red in the image.  The warped and rover vision image are overlayed onto the simulator in order to visualize what the camera sees.
 rover coordinates were calculated from the warped image.
 
-The rover coordinates were combined with the rover positions translate the rover vision image onto the world map.
+(5) The rover coordinates were combined with the rover positions translate the rover vision image onto the world map.
 
-The navigable terrain from the rover image were overlayed onto the world map in bliue and the obstacle were overlayed onto the worldmap in red.  Pitch and roll thresholds were used to control when to mpa navigable terrain and obstacles in order to increase the accuracy of the mapping.
+(6) The navigable terrain from the rover image were converted to world coordinates.
 
-Navigable pixel angles and their distances were calcuated for use in the decision steps.
+(7) the navigable and obstacles in world coordinated were overlayed onto the world map in blue and the obstacles were overlayed onto the worldmap in red.  
 
-A rock finding routine was added to find gold rocks in the rover camera image.
+Pitch and roll thresholds were used to control when to mpa navigable terrain and obstacles in order to increase the accuracy of the mapping.
+
+(8) Navigable pixel angles and their distances were calcuated for use in the decision steps.
+
+(9) A rock finding routine was added to find gold rocks in the rover camera image.
 
 If any rock was found it was mapped onto the worldmap using the steps above.
 
