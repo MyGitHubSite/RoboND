@@ -29,13 +29,34 @@ navigable terrain [[160,255],[160,255],[160,255]])
 obstacles [[0,160],[0,160],[0,160]])
 rocks [[100,255],[100,255],[0,50]])
 
-Describe in your writeup (and identify where in your code) how you modified or added functions to add obstacle and rock sample identification. 
+And then in the process_image function I call the color_thresh2 function each time for identifying the navigable terrain, obstacles, and rocks in the camera image.
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 
+(1) The source and destination points were added to create a perspective from the camera image.
+
+(2) The forward perspective was then warped to a top-down view.
+
+(3) The color thresholds were run through the color_thresh2 function to identify navigable terrain and obstacles.
+
+Modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+ - navigable terrain [[160,255],[160,255],[160,255]])
+ - rocks [[100,255],[100,255],[0,50]])
+
+(4) The rover coordinates were combined with the rover positions translate the rover vision image onto the world map.
+
+(5) The navigable terrain from the rover image were converted to world coordinates.
+
+(6) the navigable and obstacles in world coordinated were overlayed onto the world map in blue and the obstacles were overlayed onto the worldmap in red.  
+
+A rock finding routine was added to find gold rocks in the rover camera image.
+If any rock was found it was mapped onto the worldmap using the steps above.
+
+(7) An output mosaic was created that combined the warped image, original image, navigable terrain
+
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
 
-[Boulder]: ./calibration_images/Boulders.jpg
+![Boulder]: ./calibration_images/Boulders.jpg
 
 
 ![alt text][image2]
