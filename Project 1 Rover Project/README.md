@@ -131,7 +131,7 @@ Within the forward, stop, and rock collection routines I added some code to allo
   
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
 
-My rover usually gets to > 75% mapped and > 75% fidelity quite easily though some problem areas pop up depending upon how the simulator was initialized. 
+My rover usually gets to > 40% mapped and > 75% fidelity quite easily though some problem areas pop up depending upon how the simulator was initialized. 
 
 Sometimes in certains parts of the map where it's a coin toss between going left or right my rover may need a few passes to eventually make the correct turn and continue on mapping unexplored regions.  I didn't want to over-specify the decisions knowing what the map looks like so I avoided writing any kind of handling for the trouble spots.  If I had more time I would dive deeper into how the pixels, pitch, and roll are controlling the randomness and then fix so that the rover can traverse the map more quickly.  Right now the rover does a decent job with what I already implemented.
  
