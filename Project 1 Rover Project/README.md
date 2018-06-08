@@ -35,7 +35,7 @@ Describe in your writeup (and identify where in your code) how you modified or a
 
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
 
-![Boulder]: ./calibration_images/Boulders.jpg
+[Boulder]: ./calibration_images/Boulders.jpg
 
 
 ![alt text][image2]
