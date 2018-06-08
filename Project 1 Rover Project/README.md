@@ -1,5 +1,6 @@
 ## Project: Search and Sample Return
 
+
 **The goals / steps of this project are the following:**  
 
 **Training / Calibration**  
@@ -22,15 +23,20 @@
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 
+I modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection. However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+
+navigable terrain [[160,255],[160,255],[160,255]])
+obstacles [[0,160],[0,160],[0,160]])
+rocks [[100,255],[100,255],[0,50]])
+
 Describe in your writeup (and identify where in your code) how you modified or added functions to add obstacle and rock sample identification. 
-
-Here is an example of how to include an image in your writeup.
-
-![alt text][image1]
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
+
+![Boulder]: ./calibration_images/Boulders.jpg
+
 
 ![alt text][image2]
 ### Autonomous Navigation and Mapping
