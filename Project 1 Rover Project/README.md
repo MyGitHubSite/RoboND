@@ -43,7 +43,9 @@ My Jupyter Notebook:
 (3) The color thresholds were run through the color_thresh2 function to identify navigable terrain and obstacles.
 
 I modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
+
  - navigable terrain [[160,255],[160,255],[160,255]])
+ - obstacles were the opposite of navigable terrain
  - rocks [[100,255],[100,255],[0,50]])
 
 (4) The rover coordinates were combined with the rover positions to translate the rover vision image onto the world map.
@@ -76,8 +78,9 @@ Here is the movie I created in training mode:
 I modified the color_thresh function (color_thresh2) to take in a range of rbg values. In order to have more control over detection.  However, I left the rgb vales pretty much as used in the sample jupyter project and lectures as they were doing a decent job.
 
  - navigable terrain [[160,255],[160,255],[160,255]])
+ - obstacles were the opposite of navigable terrain
  - rocks [[100,255],[100,255],[0,50]])
-
+ 
 (4) A rover vision was created so that the warped navigable terrain showed up as blue in an image and obstacles showed up in red in the image.  The warped and rover vision imageswere overlayed onto the simulator in order to visualize what the camera was seeing.
 
 (5) The rover coordinates were calculated from the warped image and were combined with the rover positions to translate the rover vision image onto the world map.
