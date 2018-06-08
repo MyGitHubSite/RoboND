@@ -56,11 +56,11 @@ If any rock was found it was mapped onto the worldmap using the steps above.
 
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
 
-![alt text] (../master/Project 1 Rover Project/calibration_images/Boulders.jpg)
+"Dark Boulder"
+![Boulder](calibration_images/Boulders.jpg) 
 
-Udacity-RoboND/Project 1 Rover Project/calibration_images/Boulders.jpg 
+![My Movie](mytest_mapping.mp4)
 
-![alt text][image2]
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
