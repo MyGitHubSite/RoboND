@@ -56,7 +56,7 @@ If any rock was found it was mapped onto the worldmap using the steps above.
 
 Describe in your writeup how you modified the process_image() to demonstrate your analysis and how you created a worldmap. Include your video output with your submission.
 
-![alt text][./calibration_images/Boulders.jpg]
+![alt text][../calibration_images/Boulders.jpg]
 
 
 ![alt text][image2]
